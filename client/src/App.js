@@ -13,6 +13,7 @@ import { Provider } from 'react-redux';
 import Home from './components/Home';
 import Navbar from './components/Navbar';
 import Contact from './components/Contact';
+import TextEditor from './components/TextEditor';
 
 function App() {
   return (
@@ -20,7 +21,8 @@ function App() {
       <Router>
         <>
           <Navbar />
-          <Route exact path='/' component={Home} />
+          {/* <Route exact path='/' component={Home} /> */}
+          <Route exact path='/' component={TextEditor} />
 
           <Switch>
             <React.Fragment>
