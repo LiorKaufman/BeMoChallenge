@@ -39,7 +39,7 @@ const HOTKEYS = {
 const LIST_TYPES = ['numbered-list', 'bulleted-list'];
 
 // main text editor to be used
-const TextEditor = () => {
+const TextEditor = ({ editedValue }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [value, setValue] = useState(initialValue);
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
@@ -72,6 +72,7 @@ const TextEditor = () => {
           editor={editor}
           value={value}
           onChange={(value) => setValue(value)}
+          contentEditable={false}
         >
           <Toolbar>
             <MarkButton format='bold' icon='format_bold' />
@@ -80,6 +81,7 @@ const TextEditor = () => {
             <MarkButton format='code' icon='code' />
             <BlockButton format='heading-one' icon='looks_one' />
             <BlockButton format='heading-two' icon='looks_two' />
+            <BlockButton format='heading-three' icon='looks_3' />
             <BlockButton format='block-quote' icon='format_quote' />
             <BlockButton format='numbered-list' icon='format_list_numbered' />
             <BlockButton format='bulleted-list' icon='format_list_bulleted' />
@@ -157,13 +159,19 @@ const Element = (props) => {
     case 'image':
       return <ImageElement {...props} />;
     case 'block-quote':
-      return <blockquote {...attributes}>{children}</blockquote>;
+      return (
+        <blockquote {...attributes} style={{ backgroundColor: 'grey' }}>
+          {children}
+        </blockquote>
+      );
     case 'bulleted-list':
       return <ul {...attributes}>{children}</ul>;
     case 'heading-one':
       return <h1 {...attributes}>{children}</h1>;
     case 'heading-two':
       return <h2 {...attributes}>{children}</h2>;
+    case 'heading-three':
+      return <h3 {...attributes}>{children}</h3>;
     case 'list-item':
       return <li {...attributes}>{children}</li>;
     case 'numbered-list':
@@ -417,6 +425,7 @@ const initialValue = [
       {
         text:
           'In addition to nodes that contain editable text, you can also create other types of nodes, like images or videos.',
+        color: 'red',
       },
     ],
   },
