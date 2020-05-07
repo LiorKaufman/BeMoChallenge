@@ -11,4 +11,4 @@ const ContentSchema = new mongoose.Schema({
   },
 });
 
-module.exports = User = mongoose.model('content', ContentSchema);
+module.exports = Content = mongoose.model('content', ContentSchema);
