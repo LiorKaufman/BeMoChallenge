@@ -1,0 +1,34 @@
+footer {
+  background-color: #000066;
+  padding: 2% 5% 2% 5%;
+}
+
+#footer {
+  color: #ffffff;
+  font-size: 13px;
+}
+
+#socialicons {
+  text-align: center;
+  float: right;
+  display: inline-block;
+}
+
+a.social,
+a.social1 {
+  color: #ffffff !important;
+}
+
+a.social {
+  color: #ffffff !important;
+  font-family: 'SocialicoRegular';
+  font-size: 28px;
+  margin: 0 10px 0px 10px;
+  position: relative;
+  display: inline-block;
+  -webkit-transition: all 450ms;
+  -moz-transition: all 450ms;
+  -ms-transition: all 450ms;
+  -o-transition: all 450ms;
+  transition: all 450ms;
+}

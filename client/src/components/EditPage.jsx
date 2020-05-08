@@ -7,41 +7,75 @@ import TextEditor from './TextEditor';
 import { HOME_PAGE } from '../actions/ContentIDs';
 
 // react router
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 
 // redux
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import {
+  getContent,
   createNewContent,
   getContentById,
   updateContentById,
 } from '../actions/contentActions';
+import { set } from 'mongoose';
 
 const EditPage = ({ isAuthenticated }) => {
-  const [value, setValue] = useState([]);
+  let history = useHistory();
+  const [pages, setPages] = useState([
+    {
+      label: 'Home Page',
+      value: HOME_PAGE,
+    },
+  ]);
+
+  const [editedID, setEditedID] = useState(HOME_PAGE);
+
   const [isLoading, setLoading] = useState(true);
   useEffect(() => {
-    const loadContent = async () => {
-      const res = await getContentById(HOME_PAGE);
-
-      const content = JSON.parse(res);
-      setValue(content);
+    const loadContentIds = async () => {
+      setLoading(true);
+      const res = await getContent();
+      const idArray = res.map((ele, index) => ({
+        label: `Page number ${index + 1}`,
+        value: ele._id,
+      }));
+      setPages(idArray);
+      setEditedID(idArray[0].value);
       setLoading(false);
     };
-    loadContent();
+    loadContentIds();
   }, []);
-  const onSubmit = (e) => {
+
+  const changeContent = async (e) => {
+    setLoading(true);
     e.preventDefault();
-    console.log(value);
-    updateContentById(HOME_PAGE, value);
+    console.log(e.currentTarget.value);
+    setEditedID(e.currentTarget.value);
+    setLoading(false);
   };
+
   if (!isAuthenticated && !isLoading) {
     return <Redirect to='/' />;
   }
   return (
-    <div>{isLoading ? 'Loading...' : <TextEditor editedValue={value} />}</div>
+    <div>
+      <select
+        className='page-selector'
+        value={editedID}
+        onChange={(e) => changeContent(e)}
+      >
+        {pages.map(({ label, value }) => (
+          <option key={value} value={value}>
+            {label}
+          </option>
+        ))}
+      </select>
+      <div className='page-editor'>
+        {isLoading ? 'Loading...' : <TextEditor editedID={editedID} />}
+      </div>
+    </div>
   );
 };
 

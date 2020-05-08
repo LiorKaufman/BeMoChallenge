@@ -4,6 +4,9 @@ import React, { useEffect } from 'react';
 import './App.css';
 import './resources/css/navbar.css';
 import './resources/css/Login.css';
+import './resources/css/Editpage.css';
+import './resources/css/Footer.css';
+import './resources/css/Contact.css';
 
 // redux
 import { Provider } from 'react-redux';
@@ -20,6 +23,7 @@ import Contact from './components/Contact';
 import TextEditor from './components/TextEditor';
 import Login from './components/auth/Login';
 import EditPage from './components/EditPage';
+import Footer from './components/Footer';
 
 // helpers
 import setAuthToken from './helpers/setAuthToken';
@@ -36,8 +40,8 @@ function App() {
           <>
             <div id='hwrap'>
               <Navbar />
-              <div className='box'></div>
             </div>
+            <div className='box'></div>
             <Route exact path='/' component={Home} />
 
             <Switch>
@@ -48,6 +52,7 @@ function App() {
               </React.Fragment>
             </Switch>
           </>
+          <Footer />
         </Router>
       </div>
     </Provider>

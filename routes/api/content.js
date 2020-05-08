@@ -33,6 +33,7 @@ router.post('/', async (req, res) => {
 // @access Private
 router.put('/:id', async (req, res) => {
   const data = JSON.stringify(req.body);
+  console.log('updating content', data);
 
   try {
     let content = await Content.findById(req.params.id);
