@@ -10,7 +10,7 @@ import {
   useFocused,
   withReact,
 } from 'slate-react';
-import { getContentById } from '../actions/updateContent';
+import { getContentById } from '../actions/contentActions';
 import { Link } from 'react-router-dom';
 import { HOME_PAGE } from '../actions/ContentIDs';
 

@@ -33,7 +33,7 @@ import {
   updateSite,
   getContentById,
   updateContentById,
-} from '../actions/updateContent';
+} from '../actions/contentActions';
 
 import { HOME_PAGE } from '../actions/ContentIDs';
 // slate configs
@@ -45,9 +45,6 @@ const HOTKEYS = {
 };
 const LIST_TYPES = ['numbered-list', 'bulleted-list'];
 
-const box = {
-  height: '167px',
-};
 const ELEMENT_TAGS = {
   A: (el) => ({ type: 'link', url: el.getAttribute('href') }),
   BLOCKQUOTE: () => ({ type: 'quote' }),
@@ -117,7 +114,7 @@ export const deserialize = (el) => {
 // main text editor to be used
 const TextEditor = ({ editedValue }) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [value, setValue] = useState(initialValue);
+  const [value, setValue] = useState(editedValue);
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
   const editor = useMemo(
     () =>
@@ -143,7 +140,6 @@ const TextEditor = ({ editedValue }) => {
 
   return (
     <div>
-      <div style={box}></div>
       <form type='POST'>
         <Slate
           editor={editor}

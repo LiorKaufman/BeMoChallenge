@@ -1,0 +1,112 @@
+.register-btn {
+  color: #373737;
+  background-color: var(--primary-color);
+  padding: 14px 7px;
+  font-size: 14px;
+  text-transform: uppercase;
+  border: none;
+  width: 100%;
+  margin-bottom: 3rem;
+  margin-top: 0.5rem;
+  margin-left: 4.5px;
+
+  cursor: pointer;
+  border: 1px solid #99b0bc;
+}
+.register-login {
+  display: block;
+  text-align: center;
+  color: var(--gray-light);
+  font-weight: 400;
+}
+
+.register-title {
+  font-size: 28px;
+  font-weight: 300;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  text-align: center;
+  vertical-align: baseline;
+  color: #373737;
+}
+.register-form {
+  display: block;
+}
+.register-align {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align: baseline;
+  flex-direction: column;
+}
+.register-input {
+  display: block;
+  width: 100%;
+  padding: 12px 7px;
+  font-size: 14px;
+  background: transparent;
+  color: #99b0bc;
+  border: 1px solid #99b0bc;
+  margin-bottom: 13px;
+  font-weight: 100;
+  letter-spacing: 1px;
+}
+
+.register-card {
+  height: 640px;
+  width: 330px;
+  vertical-align: baseline;
+  border: 2px solid #99b0bc;
+  padding: 2rem;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  border-radius: 4px;
+}
+.register-label {
+  color: white;
+  font-weight: 200;
+  margin-bottom: 7px;
+  display: inline-block;
+}
+.register-subtitile {
+  color: #373737;
+}
+
+.social_icon span {
+  font-size: 60px;
+  margin-left: 10px;
+}
+
+.social_icon span:hover {
+  color: #ffc312 !important;
+  cursor: pointer;
+}
+
+.social_icon {
+  position: absolute;
+  right: 20px;
+  top: -45px;
+}
+
+.input-group-prepend span {
+  width: 50px;
+  background-color: #ffc312;
+  color: black;
+  border: 0 !important;
+}
+
+input:focus {
+  outline: 0 0 0 0 !important;
+  box-shadow: 0 0 0 0 !important;
+}
+
+.remember input {
+  width: 20px;
+  height: 20px;
+  margin-left: 15px;
+  margin-right: 5px;
+}
+
+.links a {
+  margin-left: 4px;
+}

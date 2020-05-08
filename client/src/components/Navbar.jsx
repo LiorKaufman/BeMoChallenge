@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 
+// React router
 import { Link } from 'react-router-dom';
+
+// Redux
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { logout } from '../actions/authActions';
 
 import BrandLogo from '../resources/images/bemo-logo2.png';
 
-const Navbar = () => {
+const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
@@ -40,7 +46,27 @@ const Navbar = () => {
                 <Link to='/contact'>Contact</Link>
               </li>
               <li>
-                <Link to='/editing'>Edit</Link>
+                {!loading && (
+                  <>
+                    {isAuthenticated ? (
+                      <div
+                        onClick={logout}
+                        style={{
+                          cursor: 'pointer',
+                        }}
+                      >
+                        Logout
+                      </div>
+                    ) : (
+                      <Link to='/login'>Login</Link>
+                    )}{' '}
+                  </>
+                )}
+              </li>
+              <li>
+                {!loading && (
+                  <>{isAuthenticated ? <Link to='/editing'>Edit</Link> : ''} </>
+                )}
               </li>
             </ul>
           </nav>
@@ -50,4 +76,13 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+Navbar.propTypes = {
+  logout: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { logout })(Navbar);
