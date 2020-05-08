@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../actions/authActions';
 
+// images
 import BrandLogo from '../resources/images/bemo-logo2.png';
 
 const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {

@@ -1,15 +1,10 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
+
+// sltae dependacies and utilities
 import imageExtensions from 'image-extensions';
 import isUrl from 'is-url';
 import isHotkey from 'is-hotkey';
-import {
-  Editor,
-  Transforms,
-  createEditor,
-  Range,
-  ValueJSON,
-  Operation,
-} from 'slate';
+import { Editor, Transforms, createEditor, Range } from 'slate';
 import {
   Slate,
   Editable,
@@ -21,21 +16,21 @@ import {
 } from 'slate-react';
 import { withHistory } from 'slate-history';
 import { css } from 'emotion';
-
 import { jsx } from 'slate-hyperscript';
 
+// slate components
 import { Button, Icon, Toolbar } from './components';
 
 // react router
 import { Link, useHistory } from 'react-router-dom';
 
+// redux
 import {
   createNewContent,
   getContentById,
   updateContentById,
 } from '../actions/contentActions';
 
-import { HOME_PAGE } from '../actions/ContentIDs';
 // slate configs
 const HOTKEYS = {
   'mod+b': 'bold',

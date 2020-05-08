@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 
 import { css } from 'emotion';
+
 // slate text editor
 import { createEditor } from 'slate';
 import {
@@ -16,6 +17,7 @@ import { HOME_PAGE } from '../actions/ContentIDs';
 
 import FeatureImg from '../resources/images/cda-interview-guide.jpg';
 
+// slate elements and configs
 const Leaf = ({ attributes, children, leaf }) => {
   if (leaf.bold) {
     children = <strong>{children}</strong>;

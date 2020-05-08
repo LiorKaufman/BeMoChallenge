@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // components
 import TextEditor from './TextEditor';
@@ -7,19 +7,12 @@ import TextEditor from './TextEditor';
 import { HOME_PAGE } from '../actions/ContentIDs';
 
 // react router
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 
 // redux
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
-import {
-  getContent,
-  createNewContent,
-  getContentById,
-  updateContentById,
-} from '../actions/contentActions';
-import { set } from 'mongoose';
+import { getContent } from '../actions/contentActions';
 
 const EditPage = ({ isAuthenticated }) => {
   let history = useHistory();

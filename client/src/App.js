@@ -20,7 +20,6 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './components/Home';
 import Navbar from './components/Navbar';
 import Contact from './components/Contact';
-import TextEditor from './components/TextEditor';
 import Login from './components/auth/Login';
 import EditPage from './components/EditPage';
 import Footer from './components/Footer';
