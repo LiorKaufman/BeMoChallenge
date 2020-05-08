@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const updateSite = async (formData) => {
+export const createNewContent = async (formData) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',

@@ -18,6 +18,7 @@ import Navbar from './components/Navbar';
 import Contact from './components/Contact';
 import TextEditor from './components/TextEditor';
 import Login from './components/auth/Login';
+import EditPage from './components/EditPage';
 
 // helpers
 import setAuthToken from './helpers/setAuthToken';
@@ -40,7 +41,7 @@ function App() {
             <Switch>
               <React.Fragment>
                 <Route exact path='/login' component={Login} />
-                <Route exact path='/editing' component={TextEditor} />
+                <Route exact path='/editing' component={EditPage} />
                 <Route exact path='/contact' component={Contact} />
               </React.Fragment>
             </Switch>
