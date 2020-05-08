@@ -11,9 +11,11 @@ import { logout } from '../actions/authActions';
 import BrandLogo from '../resources/images/bemo-logo2.png';
 
 const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
+  const [isEditing, setIsEditing] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
+  const toggleEditing = () => setIsEditing((prevState) => !prevState);
 
   return (
     <header className='navbar desktopScreenNavbar'>
@@ -63,9 +65,16 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
                   </>
                 )}
               </li>
-              <li>
+              <li onClick={toggleEditing}>
                 {!loading && (
-                  <>{isAuthenticated ? <Link to='/editing'>Edit</Link> : ''} </>
+                  <>
+                    {isAuthenticated &&
+                      (isEditing ? (
+                        <Link to='/'> Stop Editing </Link>
+                      ) : (
+                        <Link to='/editing'>Edit</Link>
+                      ))}
+                  </>
                 )}
               </li>
             </ul>

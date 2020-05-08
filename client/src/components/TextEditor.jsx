@@ -27,10 +27,10 @@ import { jsx } from 'slate-hyperscript';
 import { Button, Icon, Toolbar } from './components';
 
 // react router
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import {
-  updateSite,
+  createNewContent,
   getContentById,
   updateContentById,
 } from '../actions/contentActions';
@@ -112,9 +112,11 @@ export const deserialize = (el) => {
 };
 
 // main text editor to be used
-const TextEditor = ({ editedValue }) => {
+const TextEditor = ({ editedID }) => {
+  let history = useHistory();
+
   const [isLoading, setIsLoading] = useState(true);
-  const [value, setValue] = useState(editedValue);
+  const [value, setValue] = useState([]);
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
   const editor = useMemo(
     () =>
@@ -124,63 +126,100 @@ const TextEditor = ({ editedValue }) => {
 
   useEffect(() => {
     const loadContent = async () => {
-      const res = await getContentById(HOME_PAGE);
+      const res = await getContentById(editedID);
 
       const content = JSON.parse(res);
+      console.log(content);
+
       setValue(content);
+      setIsLoading(false);
     };
     loadContent();
-  }, []);
+  }, [editedID]);
+  const handleUpateContent = (e) => {
+    // e.preventDefault();
+    // console.log('updating', value, editedID);
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    console.log(value);
-    updateContentById(HOME_PAGE, value);
+    updateContentById(editedID, value);
+    history.push('/');
   };
 
+  const handleCreateNew = (e) => {
+    e.preventDefault();
+    createNewContent(value);
+    history.push('/');
+  };
   return (
     <div>
-      <form type='POST'>
-        <Slate
-          editor={editor}
-          value={value}
-          onChange={(value) => setValue(value)}
-          contentEditable={false}
-        >
-          <Toolbar>
-            <MarkButton format='bold' icon='format_bold' />
-            <MarkButton format='italic' icon='format_italic' />
-            <MarkButton format='underline' icon='format_underlined' />
-            <MarkButton format='strikethrough' icon='format_strikethrough' />
-            <MarkButton format='code' icon='code' />
-            <BlockButton format='heading-one' icon='looks_one' />
-            <BlockButton format='heading-two' icon='looks_two' />
-            <BlockButton format='heading-three' icon='looks_3' />
-            <BlockButton format='block-quote' icon='format_quote' />
-            <BlockButton format='numbered-list' icon='format_list_numbered' />
-            <BlockButton format='bulleted-list' icon='format_list_bulleted' />
-            <LinkButton />
-            <InsertImageButton />
-          </Toolbar>
-          <Editable
-            renderElement={(props) => <Element {...props} />}
-            renderLeaf={renderLeaf}
-            placeholder='Enter some text...'
-            spellCheck
-            autoFocus
-            onKeyDown={(event) => {
-              for (const hotkey in HOTKEYS) {
-                if (isHotkey(hotkey, event)) {
-                  event.preventDefault();
-                  const mark = HOTKEYS[hotkey];
-                  toggleMark(editor, mark);
-                }
-              }
-            }}
-          />
-        </Slate>
-        <button onClick={(e) => onSubmit(e)}>Submit</button>
-      </form>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <div>
+          <div className='page-options'>
+            <button
+              onClick={(e) => handleCreateNew(e)}
+              className='page-control-btn btn-create'
+            >
+              Create New content
+            </button>
+            <button
+              onClick={(e) => handleUpateContent(e)}
+              className='page-control-btn btn-update'
+            >
+              Update Current Content
+            </button>
+          </div>
+          <form type='POST'>
+            <Slate
+              editor={editor}
+              value={value}
+              onChange={(value) => setValue(value)}
+              contentEditable={false}
+            >
+              <Toolbar>
+                <MarkButton format='bold' icon='format_bold' />
+                <MarkButton format='italic' icon='format_italic' />
+                <MarkButton format='underline' icon='format_underlined' />
+                <MarkButton
+                  format='strikethrough'
+                  icon='format_strikethrough'
+                />
+                <MarkButton format='code' icon='code' />
+                <BlockButton format='heading-one' icon='looks_one' />
+                <BlockButton format='heading-two' icon='looks_two' />
+                <BlockButton format='heading-three' icon='looks_3' />
+                <BlockButton format='block-quote' icon='format_quote' />
+                <BlockButton
+                  format='numbered-list'
+                  icon='format_list_numbered'
+                />
+                <BlockButton
+                  format='bulleted-list'
+                  icon='format_list_bulleted'
+                />
+                <LinkButton />
+                <InsertImageButton />
+              </Toolbar>
+              <Editable
+                renderElement={(props) => <Element {...props} />}
+                renderLeaf={renderLeaf}
+                placeholder='Enter some text...'
+                spellCheck
+                autoFocus
+                onKeyDown={(event) => {
+                  for (const hotkey in HOTKEYS) {
+                    if (isHotkey(hotkey, event)) {
+                      event.preventDefault();
+                      const mark = HOTKEYS[hotkey];
+                      toggleMark(editor, mark);
+                    }
+                  }
+                }}
+              />
+            </Slate>
+          </form>
+        </div>
+      )}
     </div>
   );
 };

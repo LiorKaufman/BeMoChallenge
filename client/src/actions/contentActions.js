@@ -51,6 +51,8 @@ export const updateContentById = async (id, formData) => {
 export const getContent = async () => {
   try {
     const res = await axios.get(`/api/content`);
+    console.log('fromt he ger,', res.data);
+
     return res.data;
   } catch (err) {
     const errors = err.response.data.errors;

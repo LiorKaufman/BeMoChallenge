@@ -1,0 +1,39 @@
+.page-options {
+}
+
+.page-selector {
+  display: inline-block;
+  color: #373737;
+  background-color: var(--primary-color);
+  padding: 14px 7px;
+  cursor: pointer;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  min-width: 240px;
+  max-width: 600px;
+  width: 10rem;
+}
+
+.page-editor {
+  margin: 1.5rem;
+}
+
+.page-control-btn {
+  cursor: pointer;
+  display: inline-block;
+  margin: 2rem;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.btn-create {
+  background-color: #4caf50; /* Green */
+}
+.btn-update {
+  background-color: #008cba;
+}

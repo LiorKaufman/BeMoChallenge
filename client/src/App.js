@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import './App.css';
 import './resources/css/navbar.css';
 import './resources/css/Login.css';
+import './resources/css/Editpage.css';
 
 // redux
 import { Provider } from 'react-redux';
@@ -36,8 +37,8 @@ function App() {
           <>
             <div id='hwrap'>
               <Navbar />
-              <div className='box'></div>
             </div>
+            <div className='box'></div>
             <Route exact path='/' component={Home} />
 
             <Switch>
