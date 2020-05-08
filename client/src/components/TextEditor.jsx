@@ -137,9 +137,6 @@ const TextEditor = ({ editedID }) => {
     loadContent();
   }, [editedID]);
   const handleUpateContent = (e) => {
-    // e.preventDefault();
-    // console.log('updating', value, editedID);
-
     updateContentById(editedID, value);
     history.push('/');
   };

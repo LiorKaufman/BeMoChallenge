@@ -14,7 +14,9 @@ import { getContentById } from '../actions/contentActions';
 import { Link } from 'react-router-dom';
 import { CONTACT_PAGE } from '../actions/ContentIDs';
 
-import FeatureImg from '../resources/images/cda-interview-guide.jpg';
+import ContactImg from '../resources/images/contact-us.png';
+
+import ContactForm from './ContactForm';
 
 const Leaf = ({ attributes, children, leaf }) => {
   if (leaf.bold) {
@@ -118,7 +120,7 @@ const Contact = () => {
     <>
       <div id='feature' className='bghide'>
         <img
-          src={FeatureImg}
+          src={ContactImg}
           alt='feature image'
           id='feautreImg'
           style={{
@@ -146,6 +148,7 @@ const Contact = () => {
             </div>
           </div>
         </div>
+        <ContactForm />
       </section>
     </>
   );

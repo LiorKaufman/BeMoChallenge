@@ -34,13 +34,6 @@ const EditPage = ({ isAuthenticated }) => {
 
   const [isLoading, setLoading] = useState(true);
   useEffect(() => {
-    // const loadContent = async () => {
-    //   const res = await getContentById(editedID);
-    //   const content = JSON.parse(res);
-    //   console.log(content);
-    //   // setValue(content);
-    //   setLoading(false);
-    // };
     const loadContentIds = async () => {
       setLoading(true);
       const res = await getContent();
@@ -52,7 +45,6 @@ const EditPage = ({ isAuthenticated }) => {
       setEditedID(idArray[0].value);
       setLoading(false);
     };
-    // loadContent();
     loadContentIds();
   }, []);
 
@@ -64,19 +56,6 @@ const EditPage = ({ isAuthenticated }) => {
     setLoading(false);
   };
 
-  // const handleUpateContent = (e) => {
-  //   // e.preventDefault();
-  //   // console.log('updating', value, editedID);
-
-  //   // updateContentById(editedID, updatedValues);
-  //   history.push('/');
-  // };
-
-  // const handleCreateNew = (e) => {
-  //   e.preventDefault();
-  //   // createNewContent(value);
-  //   history.push('/');
-  // };
   if (!isAuthenticated && !isLoading) {
     return <Redirect to='/' />;
   }
