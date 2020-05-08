@@ -7,6 +7,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "bootstrap": "^4.4.1",
     "emotion": "^10.0.27",
     "image-extensions": "^1.1.0",
     "is-hotkey": "^0.1.6",
@@ -17,10 +18,12 @@
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
+    "reactstrap": "^8.4.1",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
-    "slate-history": "^0.58.0"
+    "slate-history": "^0.58.0",
+    "slate-hyperscript": "^0.58.0"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -22,13 +22,20 @@ import {
 import { withHistory } from 'slate-history';
 import { css } from 'emotion';
 
+import { jsx } from 'slate-hyperscript';
+
 import { Button, Icon, Toolbar } from './components';
 
 // react router
 import { Link } from 'react-router-dom';
 
-import { updateSite, someFunction, getContent } from '../actions/updateContent';
+import {
+  updateSite,
+  getContentById,
+  updateContentById,
+} from '../actions/updateContent';
 
+import { HOME_PAGE } from '../actions/ContentIDs';
 // slate configs
 const HOTKEYS = {
   'mod+b': 'bold',
@@ -38,35 +45,105 @@ const HOTKEYS = {
 };
 const LIST_TYPES = ['numbered-list', 'bulleted-list'];
 
+const box = {
+  height: '167px',
+};
+const ELEMENT_TAGS = {
+  A: (el) => ({ type: 'link', url: el.getAttribute('href') }),
+  BLOCKQUOTE: () => ({ type: 'quote' }),
+  H1: () => ({ type: 'heading-one' }),
+  H2: () => ({ type: 'heading-two' }),
+  H3: () => ({ type: 'heading-three' }),
+  H4: () => ({ type: 'heading-four' }),
+  H5: () => ({ type: 'heading-five' }),
+  H6: () => ({ type: 'heading-six' }),
+  IMG: (el) => ({ type: 'image', url: el.getAttribute('src') }),
+  LI: () => ({ type: 'list-item' }),
+  OL: () => ({ type: 'numbered-list' }),
+  P: () => ({ type: 'paragraph' }),
+  PRE: () => ({ type: 'code' }),
+  UL: () => ({ type: 'bulleted-list' }),
+};
+
+// COMPAT: `B` is omitted here because Google Docs uses `<b>` in weird ways.
+const TEXT_TAGS = {
+  CODE: () => ({ code: true }),
+  DEL: () => ({ strikethrough: true }),
+  EM: () => ({ italic: true }),
+  I: () => ({ italic: true }),
+  S: () => ({ strikethrough: true }),
+  STRONG: () => ({ bold: true }),
+  U: () => ({ underline: true }),
+};
+
+export const deserialize = (el) => {
+  if (el.nodeType === 3) {
+    return el.textContent;
+  } else if (el.nodeType !== 1) {
+    return null;
+  } else if (el.nodeName === 'BR') {
+    return '\n';
+  }
+
+  const { nodeName } = el;
+  let parent = el;
+
+  if (
+    nodeName === 'PRE' &&
+    el.childNodes[0] &&
+    el.childNodes[0].nodeName === 'CODE'
+  ) {
+    parent = el.childNodes[0];
+  }
+  const children = Array.from(parent.childNodes).map(deserialize).flat();
+
+  if (el.nodeName === 'BODY') {
+    return jsx('fragment', {}, children);
+  }
+
+  if (ELEMENT_TAGS[nodeName]) {
+    const attrs = ELEMENT_TAGS[nodeName](el);
+    return jsx('element', attrs, children);
+  }
+
+  if (TEXT_TAGS[nodeName]) {
+    const attrs = TEXT_TAGS[nodeName](el);
+    return children.map((child) => jsx('text', attrs, child));
+  }
+
+  return children;
+};
+
 // main text editor to be used
 const TextEditor = ({ editedValue }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [value, setValue] = useState(initialValue);
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
   const editor = useMemo(
-    () => withImages(withLinks(withHistory(withReact(createEditor())))),
+    () =>
+      withHtml(withImages(withLinks(withHistory(withReact(createEditor()))))),
     []
   );
 
   useEffect(() => {
-    const testing = async () => {
-      const res = await getContent();
-      console.log(res);
-      const t = JSON.parse(res[0].maintext);
-      console.log(t);
-      setValue(t);
+    const loadContent = async () => {
+      const res = await getContentById(HOME_PAGE);
+
+      const content = JSON.parse(res);
+      setValue(content);
     };
-    testing();
+    loadContent();
   }, []);
 
   const onSubmit = (e) => {
     e.preventDefault();
     console.log(value);
-    updateSite(value);
+    updateContentById(HOME_PAGE, value);
   };
 
   return (
     <div>
+      <div style={box}></div>
       <form type='POST'>
         <Slate
           editor={editor}
@@ -78,6 +155,7 @@ const TextEditor = ({ editedValue }) => {
             <MarkButton format='bold' icon='format_bold' />
             <MarkButton format='italic' icon='format_italic' />
             <MarkButton format='underline' icon='format_underlined' />
+            <MarkButton format='strikethrough' icon='format_strikethrough' />
             <MarkButton format='code' icon='code' />
             <BlockButton format='heading-one' icon='looks_one' />
             <BlockButton format='heading-two' icon='looks_two' />
@@ -109,6 +187,33 @@ const TextEditor = ({ editedValue }) => {
       </form>
     </div>
   );
+};
+
+const withHtml = (editor) => {
+  const { insertData, isInline, isVoid } = editor;
+
+  editor.isInline = (element) => {
+    return element.type === 'link' ? true : isInline(element);
+  };
+
+  editor.isVoid = (element) => {
+    return element.type === 'image' ? true : isVoid(element);
+  };
+
+  editor.insertData = (data) => {
+    const html = data.getData('text/html');
+
+    if (html) {
+      const parsed = new DOMParser().parseFromString(html, 'text/html');
+      const fragment = deserialize(parsed.body);
+      Transforms.insertFragment(editor, fragment);
+      return;
+    }
+
+    insertData(data);
+  };
+
+  return editor;
 };
 
 const withImages = (editor) => {
@@ -181,7 +286,8 @@ const Element = (props) => {
         <Link
           {...attributes}
           to={`${element.url}`}
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: 'pointer', color: '#FF6600' }}
+          className='links'
         >
           {children}
         </Link>
@@ -206,6 +312,9 @@ const Leaf = ({ attributes, children, leaf }) => {
 
   if (leaf.underline) {
     children = <u>{children}</u>;
+  }
+  if (leaf.strikethrough) {
+    children = <del>{children}</del>;
   }
 
   return <span {...attributes}>{children}</span>;

@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 export const updateSite = async (formData) => {
-  console.log('is this working?');
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -22,13 +21,36 @@ export const updateSite = async (formData) => {
   }
 };
 
-export const someFunction = () => {
-  console.log('yahoooo');
+export const getContentById = async (id) => {
+  try {
+    const res = await axios.get(`/api/content/${id}`);
+
+    return res.data.maintext;
+  } catch (err) {
+    console.log(err);
+  }
 };
+
+export const updateContentById = async (id, formData) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  const body = JSON.stringify(formData);
+  try {
+    const res = await axios.put(`/api/content/${id}`, body, config);
+
+    return res.data.maintext;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const getContent = async () => {
   try {
     const res = await axios.get(`/api/content`);
-    console.log(res);
     return res.data;
   } catch (err) {
     const errors = err.response.data.errors;

@@ -2,12 +2,10 @@ import React, { useEffect } from 'react';
 
 // style
 import './App.css';
+import './resources/css/navbar.css';
 
 // react router
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-
-// redux
-import { Provider } from 'react-redux';
 
 // components
 import Home from './components/Home';
@@ -17,15 +15,17 @@ import TextEditor from './components/TextEditor';
 
 function App() {
   return (
-    <div className='App'>
+    <div id='wrapper'>
       <Router>
         <>
-          <Navbar />
-          {/* <Route exact path='/' component={Home} /> */}
-          <Route exact path='/' component={TextEditor} />
+          <div id='hwrap'>
+            <Navbar />
+          </div>
+          <Route exact path='/' component={Home} />
 
           <Switch>
             <React.Fragment>
+              <Route exact path='/editing' component={TextEditor} />
               <Route exact path='/contact' component={Contact} />
             </React.Fragment>
           </Switch>
