@@ -45,9 +45,6 @@ const HOTKEYS = {
 };
 const LIST_TYPES = ['numbered-list', 'bulleted-list'];
 
-const box = {
-  height: '167px',
-};
 const ELEMENT_TAGS = {
   A: (el) => ({ type: 'link', url: el.getAttribute('href') }),
   BLOCKQUOTE: () => ({ type: 'quote' }),
@@ -143,7 +140,7 @@ const TextEditor = ({ editedValue }) => {
 
   return (
     <div>
-      <div style={box}></div>
+      <div className='box'></div>
       <form type='POST'>
         <Slate
           editor={editor}
