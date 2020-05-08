@@ -14,7 +14,7 @@ I was able to fulfill most of the requirements for the test, with the exception 
 
 
 With extended time, I would: 
-1. Create a an API point that accepts files and then host those files in an S3 packet in order for the file upload to possible in Heroku.
+1. Create a an API point that accepts files and then host those files in an S3 bucket in order for the file upload to possible in Heroku.
 2. Require the use of React-Helmet, a pkg that lets you deal with the meta tags in a react page.
 3. Test the facebook pixel and GA.
 4. Create an API end point using NodeMailer. There may be additional set up needed for it for work in Heroku. 
