@@ -1,9 +1,186 @@
 /* span {
   font: 16px Arial, Verdana, Helvetica, sans-serif;
 } */
-
+html,
+body,
+div,
+span,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+abbr,
+address,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+samp,
+small,
+strong,
+sub,
+sup,
+var,
+b,
+i,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  background: transparent;
+}
 h1 {
   font: 17px Arial, Verdana, Helvetica, sans-serif;
   color: #000066;
   font-weight: bold;
+}
+
+h2 {
+  font: 16px Arial, Verdana, Helvetica, sans-serif;
+  font-weight: bold;
+  color: #373737;
+}
+a {
+  color: #373737;
+  text-decoration: none;
+}
+p {
+  font: 16px Arial, Verdana, Helvetica, sans-serif;
+  color: #373737;
+}
+
+section #padding {
+  padding: 3.5%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.links {
+  text-decoration: none;
+  color: #ff6600;
+}
+
+.stacks_top {
+  position: relative;
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+}
+.stacks_in {
+  position: relative;
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  text-align: justify;
+}
+.stacks_out {
+  position: relative;
+  display: block;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+}
+
+@media only screen and (max-width: 960px) {
+  nav ul li {
+    display: block;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-right: 0;
+    padding-left: 0;
+    background: none;
+  }
+}
+@media only screen and (max-width: 1060px) {
+  nav ul li {
+    padding-left: 21px;
+    padding-right: 21px;
+  }
+}
+nav ul li {
+  display: inline-block;
+  position: relative;
+  padding-bottom: 30px;
+  padding: 0 27px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+#wrapper {
+  position: relative;
+  overflow: hidden;
+}
+#wrapper nav ul li a,
+#container nav ul li a {
+  color: #000000;
+}
+#feature.bghide {
+  background-image: none;
+}
+#feature {
+  background-image: url(./resources/images/cda-interview-guide.jpg);
+}
+#feature {
+  position: relative;
+  /* background: url(./images/endbanner.jpg) no-repeat left top; */
+  margin-bottom: -6px;
+}
+#featureImg {
+  width: 100%;
+  height: auto;
 }
