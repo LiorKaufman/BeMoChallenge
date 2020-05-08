@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 // style
 import './App.css';
 import './resources/css/navbar.css';
+import './resources/css/Login.css';
 
 // redux
 import { Provider } from 'react-redux';
@@ -35,6 +36,7 @@ function App() {
           <>
             <div id='hwrap'>
               <Navbar />
+              <div className='box'></div>
             </div>
             <Route exact path='/' component={Home} />
 

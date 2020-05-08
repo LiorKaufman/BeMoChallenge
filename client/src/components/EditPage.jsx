@@ -7,7 +7,7 @@ import TextEditor from './TextEditor';
 import { HOME_PAGE } from '../actions/ContentIDs';
 
 // react router
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 // redux
 import PropTypes from 'prop-types';
@@ -32,18 +32,16 @@ const EditPage = ({ isAuthenticated }) => {
     };
     loadContent();
   }, []);
-
   const onSubmit = (e) => {
     e.preventDefault();
     console.log(value);
     updateContentById(HOME_PAGE, value);
   };
+  if (!isAuthenticated && !isLoading) {
+    return <Redirect to='/' />;
+  }
   return (
-    <div>
-      <div className='box'></div>
-
-      {isLoading ? 'Loading...' : <TextEditor editedValue={value} />}
-    </div>
+    <div>{isLoading ? 'Loading...' : <TextEditor editedValue={value} />}</div>
   );
 };
 

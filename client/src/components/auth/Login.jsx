@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
-import '../../resources/css/Login.css';
 
 // redux
 import { connect } from 'react-redux';
@@ -8,12 +6,13 @@ import PropTypes from 'prop-types';
 import { login } from '../../actions/authActions';
 // react router
 import { Link, Redirect } from 'react-router-dom';
+
 const emptyLoginForm = {
   email: '',
   password: '',
 };
 
-function Login({ login, isAuthenticated }) {
+const Login = ({ login, isAuthenticated }) => {
   const [userLoginForm, setUserLoginForm] = useState(emptyLoginForm);
 
   const { email, password } = userLoginForm;
@@ -24,7 +23,7 @@ function Login({ login, isAuthenticated }) {
       [e.target.name]: e.target.value,
     });
 
-  const handleSubmit = async (e) => {
+  const onSumbmit = async (e) => {
     e.preventDefault();
     login(email, password);
     setUserLoginForm({
@@ -33,42 +32,63 @@ function Login({ login, isAuthenticated }) {
     });
   };
 
+  // If logged in we want to redirect the user
+
   if (isAuthenticated) {
     return <Redirect to='/' />;
   }
-
   return (
-    <div>
-      <div className='box'></div>
-      <div className='Login'>
-        <form onSubmit={handleSubmit}>
-          <FormGroup controlId='email' bssize='large'>
-            <FormLabel>Email</FormLabel>
-            <FormControl
-              autoFocus
-              type='email'
-              name='email'
-              value={email}
+    <>
+      <div
+        className='container-bg'
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <div className='register-card'>
+          <div>
+            <h3 className='register-title register-align'>Login</h3>
+          </div>
+          <form action='' className='register-form' onSubmit={onSumbmit}>
+            <label htmlFor='email' className='register-label'>
+              Email
+            </label>
+            <input
               onChange={(e) => onChange(e)}
+              type='text'
+              id='email'
+              value={email}
+              className='register-input'
+              placeholder='Email address'
+              name='email'
+              required
             />
-          </FormGroup>
-          <FormGroup controlId='password' bsSize='large'>
-            <FormLabel>Password</FormLabel>
-            <FormControl
-              name='password'
-              value={password}
+
+            <label htmlFor='password' className='register-label'>
+              Password
+            </label>
+            <input
               onChange={(e) => onChange(e)}
               type='password'
+              id='password'
+              value={password}
+              name='password'
+              className='register-input'
+              placeholder='Password'
+              required
             />
-          </FormGroup>
-          <Button block bsSize='large' type='submit'>
-            Login
-          </Button>
-        </form>
+            <button type='submit' className='register-btn'>
+              Login
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
-}
+};
+
 Login.propTypes = {
   login: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
